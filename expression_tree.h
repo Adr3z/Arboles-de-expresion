@@ -1,6 +1,8 @@
 #ifndef EXPRESSION_TREE_H
 #define EXPRESSION_TREE_H
 
+#include <stdlib.h>
+
 /*
 Códigos ASCII
 + 43
@@ -12,19 +14,26 @@ Códigos ASCII
 typedef struct node_tree node_tree_t;
 
 struct node_tree{
-    node_tree *right;
-    node_tree *left;
-    int clave;
-}
+    node_tree_t *right;
+    node_tree_t *left;
+    int value;
+};
 
-typedef struct{
-    node_tree_t *top;
+typedef struct stack_node{
+    node_tree_t *node;
+    stack_node_t *next;
+}stack_node_t;
+
+typedef struct stack{
+    stack_node_t *top;
     int size;
 }stack_t;
 
-
 //creates a node
 node_tree_t* create_node( int value );
+
+//return ascii
+int ascii(char op);
 
 //stack functions
 void initialize( stack_t *s);
