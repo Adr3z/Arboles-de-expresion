@@ -61,6 +61,30 @@ void print_aux(node_tree_t *root, int depth)
         print_aux(root->right, depth + 1);
     }
 }
+
+int evaluate_aux(node_tree_t *root)
+{
+    if(root == NULL){
+        return 0;
+    }
+    if(root->left == NULL && root->right == NULL){
+        return root->value;
+    }
+    int val_left = evaluate_aux(root->left);
+    int val_right = evaluate_aux(root->right);
+    switch(root->value){
+        case '+':
+            return val_left + val_right;
+        case '-':
+            return val_left - val_right;
+        case '*':
+            return val_left * val_right;
+        case '/':
+            return val_left/val_right;
+    }
+    return 0;
+}
+
 void initialize(stack_t *s)
 {
     s->top = NULL;
@@ -163,7 +187,8 @@ void evaluate_tree(node_tree_t *root_node)
         printf("You must build the tree!\n");
     }
     else {
+        int result = evaluate_aux(root_node);
         printf("---------------------------------\n");
-        printf("The result of the evaluation is:\n");
+        printf("The result of the evaluation is: %d\n", result);
     }
 }
