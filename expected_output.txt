@@ -46,4 +46,30 @@ The contents of the tree is
 --------------------------------
 The result of the evaluation is: 8
 
+--------------
+Expression #4
+--------------
+The expression is 26*+3
+Error: Invalid Expression.
 
+--------------
+Expression #5
+--------------
+The expression is 493/*5+
+The contents of the tree is
+---------------------------
+              [4]
+       [*]
+                     [9]
+              [/]
+                     [3]
+[+]
+       [5]
+--------------------------------
+The result of the evaluation is: 17
+
+--------------
+Expression #6
+--------------
+The expression is 4938/*5+
+Error: Invalid Expression.

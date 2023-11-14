@@ -106,6 +106,8 @@ node_tree_t *build_tree(char *postfix_expression, stack_t *s, int *valid)
 {
     printf("The expression is %s\n", postfix_expression);
 
+    *valid = 1;
+
     char *current = postfix_expression;
     
     while( *current != '\0'){
@@ -116,7 +118,7 @@ node_tree_t *build_tree(char *postfix_expression, stack_t *s, int *valid)
             push(s, node);
         }else if(c == '+' || c == '-' || c == '*' || c == '/') {
             if (s->top == NULL || s->top->next == NULL) {
-                printf("Error: Expresión posfija inválida.\n");
+                printf("Error: Invalid Expression.\n");
                 *valid = 0;
                 break;
             }
@@ -131,6 +133,10 @@ node_tree_t *build_tree(char *postfix_expression, stack_t *s, int *valid)
         current++;
     }
     node_tree_t *root = pop(s);
+    if(!isEmpty(s)){
+        printf("Error: Invalid Expression.\n");
+        *valid = 0;
+    }
     return root;
 }
 
