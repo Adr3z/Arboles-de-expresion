@@ -29,6 +29,21 @@ int ascii(char op)
     return 0;
 }
 
+int tree_height(node_tree_t *root)
+{
+    if(root == NULL){
+        return -1;
+    }else{
+        int left_height = tree_height(root->left);
+        int right_height = tree_height(root->right);
+        if(left_height > right_height){
+            return left_height + 1;
+        }else{
+            return right_height + 1;
+        }
+    }
+}
+
 void initialize(stack_t *s)
 {
     s->top = NULL;
@@ -86,12 +101,9 @@ void free_all(node_tree_t *root, stack_t *s)
 }
 
 //Main functions
-node_tree_t *build_tree(char *postfix_expression)
+node_tree_t *build_tree(char *postfix_expression, stack_t *s)
 {
     printf("The expression is %s\n", postfix_expression);
-
-    stack_t s;
-    initialize(&s);
 
     char *current = postfix_expression;
 
@@ -100,20 +112,19 @@ node_tree_t *build_tree(char *postfix_expression)
         if(isdigit(c)){
             int value = c - '0';
             node_tree_t *node = create_node(value);
-            push(&s, node);
+            push(s, node);
         }else if(c == '+' || c == '-' || c == '*' || c == '/') {
             int value = ascii(c);
 
             node_tree_t *op_node = create_node(value);
-            op_node->right = pop(&s);
-            op_node->left = pop(&s);
+            op_node->right = pop(s);
+            op_node->left = pop(s);
 
-            push(&s, op_node);
+            push(s, op_node);
         }
         current++;
     }
-    node_tree_t *root = pop(&s);
-    free_all(root, &s);
+    node_tree_t *root = pop(s);
     return root;
 }
 
@@ -125,6 +136,7 @@ void print_tree(node_tree_t *root_node)
     else {
         printf("The contents of the tree is\n");
         printf("---------------------------\n");
+
     }
 }
 
