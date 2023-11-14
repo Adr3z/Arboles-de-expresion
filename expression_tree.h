@@ -2,6 +2,7 @@
 #define EXPRESSION_TREE_H
 
 #include <stdlib.h>
+#include <stdbool.h>
 
 #include "stack.h"
 
@@ -27,7 +28,7 @@ void free_tree(node_tree_t *root);
 void free_all(node_tree_t *root, stack_t *s);
 
 //Main functions
-node_tree_t *build_tree(char *, stack_t *s);
+node_tree_t *build_tree(char *, stack_t *s, int *valid);
 void print_tree(node_tree_t *);
 void evaluate_tree(node_tree_t *);
 

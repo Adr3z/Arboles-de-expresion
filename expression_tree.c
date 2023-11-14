@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <ctype.h>
+#include <stdbool.h>
 #include "expression_tree.h"
 
 node_tree_t *create_node( int value )
@@ -101,12 +102,12 @@ void free_all(node_tree_t *root, stack_t *s)
 }
 
 //Main functions
-node_tree_t *build_tree(char *postfix_expression, stack_t *s)
+node_tree_t *build_tree(char *postfix_expression, stack_t *s, int *valid)
 {
     printf("The expression is %s\n", postfix_expression);
 
     char *current = postfix_expression;
-
+    
     while( *current != '\0'){
         char c = *current;
         if(isdigit(c)){
@@ -114,6 +115,11 @@ node_tree_t *build_tree(char *postfix_expression, stack_t *s)
             node_tree_t *node = create_node(value);
             push(s, node);
         }else if(c == '+' || c == '-' || c == '*' || c == '/') {
+            if (s->top == NULL || s->top->next == NULL) {
+                printf("Error: Expresión posfija inválida.\n");
+                *valid = 0;
+                break;
+            }
             int value = ascii(c);
 
             node_tree_t *op_node = create_node(value);
