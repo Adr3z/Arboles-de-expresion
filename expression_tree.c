@@ -44,6 +44,23 @@ int tree_height(node_tree_t *root)
     }
 }
 
+void print_aux(node_tree_t *root, int depth)
+{
+    if(root != NULL){
+        print_aux(root->left, depth + 1 );
+
+        for( int i = 0; i < depth; i++){
+            printf("       ");
+        }
+        if(root->value == '*' || root->value == '/' || root->value == '+' || root->value == '-'){
+            printf("[%c]\n", root->value);
+        }else{
+            printf("[%d]\n", root->value);
+        }
+
+        print_aux(root->right, depth + 1);
+    }
+}
 void initialize(stack_t *s)
 {
     s->top = NULL;
@@ -136,7 +153,7 @@ void print_tree(node_tree_t *root_node)
     else {
         printf("The contents of the tree is\n");
         printf("---------------------------\n");
-
+        print_aux(root_node, 0);
     }
 }
 
